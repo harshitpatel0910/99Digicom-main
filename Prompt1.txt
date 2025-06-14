@@ -1,0 +1,2843 @@
+i am working on web devlopment, creating a website, in react and with tailwind, im giving you all the appropriate codes for that, and further i will tell you about my requitrements so you can give me uodated files of that perticular needed code.
+
+
+Project title: 99digicom.main
+
+	public
+		>favicon.svg
+		>placeholders.svg
+		>robots.txt :
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: *
+Allow: /
+	
+	Components
+		ui
+		<tsx files of ui>
+		
+		>ContactForm.tsx :
+import { useState } from 'react';
+import { Send, CheckCircle } from 'lucide-react';
+
+const ContactForm = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    company: '',
+    subject: '',
+    message: ''
+  });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    
+    // Simulate form submission
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    setIsLoading(false);
+    setIsSubmitted(true);
+    
+    // Reset form after 3 seconds
+    setTimeout(() => {
+      setIsSubmitted(false);
+      setFormData({
+        name: '',
+        email: '',
+        company: '',
+        subject: '',
+        message: ''
+      });
+    }, 3000);
+  };
+
+  if (isSubmitted) {
+    return (
+      <div className="glass rounded-2xl p-8 text-center fade-in-up">
+        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <CheckCircle className="w-8 h-8 text-green-600" />
+        </div>
+        <h3 className="text-2xl font-bold text-foreground mb-4">Thank You!</h3>
+        <p className="text-muted-foreground">
+          Your message has been sent successfully. We'll get back to you within 24 hours.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="glass rounded-2xl p-8 space-y-6 fade-in-up">
+      <div className="text-center mb-8">
+        <h3 className="text-2xl font-bold text-foreground mb-2">Get in Touch</h3>
+        <p className="text-muted-foreground">
+          Ready to explore partnership opportunities? Let's start a conversation.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="floating-label">
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Your Name"
+            required
+          />
+          <label htmlFor="name">Your Name *</label>
+        </div>
+
+        <div className="floating-label">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="your.email@company.com"
+            required
+          />
+          <label htmlFor="email">Email Address *</label>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="floating-label">
+          <input
+            type="text"
+            id="company"
+            name="company"
+            value={formData.company}
+            onChange={handleChange}
+            placeholder="Your Company"
+          />
+          <label htmlFor="company">Company Name</label>
+        </div>
+
+        <div className="floating-label">
+          <select
+            id="subject"
+            name="subject"
+            value={formData.subject}
+            onChange={handleChange}
+            className="w-full px-4 pt-6 pb-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+            required
+          >
+            <option value="">Select a subject</option>
+            <option value="partnership">Partnership Inquiry</option>
+            <option value="digital-commerce">Digital Commerce</option>
+            <option value="it-marketing">IT & Marketing</option>
+            <option value="financial-services">Financial Services</option>
+            <option value="spiritual-wellness">Spiritual Wellness</option>
+            <option value="general">General Inquiry</option>
+          </select>
+          <label htmlFor="subject">Subject *</label>
+        </div>
+      </div>
+
+      <div className="floating-label">
+        <textarea
+          id="message"
+          name="message"
+          value={formData.message}
+          onChange={handleChange}
+          placeholder="Tell us about your business and partnership goals..."
+          rows={6}
+          required
+        ></textarea>
+        <label htmlFor="message">Message *</label>
+      </div>
+
+      <button
+        type="submit"
+        disabled={isLoading}
+        className="w-full btn-modern hover-glow disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+      >
+        {isLoading ? (
+          <>
+            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            Sending...
+          </>
+        ) : (
+          <>
+            Send Message
+            <Send className="w-5 h-5" />
+          </>
+        )}
+      </button>
+
+      <p className="text-sm text-muted-foreground text-center">
+        By submitting this form, you agree to our{' '}
+        <a href="#" className="text-primary hover:underline">Privacy Policy</a> and{' '}
+        <a href="#" className="text-primary hover:underline">Terms of Service</a>.
+      </p>
+    </form>
+  );
+};
+
+export default ContactForm;
+
+
+			DomainHighlits.tsx :
+
+import { Link } from 'react-router-dom';
+import { ShoppingCart, Laptop, DollarSign, Heart, ArrowRight, Users } from 'lucide-react';
+
+const DomainHighlights = () => {
+  const domains = [
+    {
+      icon: ShoppingCart,
+      title: 'Digital Commerce',
+      description: 'ONDC integration, e-commerce solutions, and co-branding opportunities for modern businesses.',
+      color: 'from-blue-500 to-cyan-500',
+      darkColor: 'dark:from-cyan-400 dark:to-blue-500',
+      bgColor: 'bg-blue-50 dark:bg-cyan-900/20',
+      partners: '5+ Partners',
+      delay: '0.1s'
+    },
+    {
+      icon: Laptop,
+      title: 'IT & Marketing',
+      description: 'Complete KPO, BPO, LPO services with cutting-edge digital strategy development.',
+      color: 'from-green-500 to-emerald-500',
+      darkColor: 'dark:from-emerald-400 dark:to-green-500',
+      bgColor: 'bg-green-50 dark:bg-emerald-900/20',
+      partners: '4+ Partners',
+      delay: '0.2s'
+    },
+    {
+      icon: DollarSign,
+      title: 'Financial Services',
+      description: 'SME loan facilitation and customized funding support for business growth.',
+      color: 'from-purple-500 to-violet-500',
+      darkColor: 'dark:from-purple-400 dark:to-violet-500',
+      bgColor: 'bg-purple-50 dark:bg-purple-900/20',
+      partners: '4+ Partners',
+      delay: '0.3s'
+    },
+    {
+      icon: Heart,
+      title: 'Spiritual Ecosystem',
+      description: 'Holistic wellness through yoga, Ayurveda, astrology, and spiritual guidance.',
+      color: 'from-orange-500 to-pink-500',
+      darkColor: 'dark:from-pink-400 dark:to-orange-500',
+      bgColor: 'bg-orange-50 dark:bg-pink-900/20',
+      partners: '4+ Partners',
+      delay: '0.4s'
+    },
+  ];
+
+  return (
+    <section className="py-20 bg-gradient-to-b from-white to-gray-50 dark:from-slate-900 dark:to-slate-800 cyber-grid">
+      <div className="container mx-auto px-4">
+        <div className="max-w-4xl mx-auto text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 fade-in-up">
+            Explore Our <span className="gradient-text">Business Domains</span>
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto fade-in-up stagger-1">
+            Discover comprehensive solutions across four strategic verticals designed to accelerate your business growth.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+          {domains.map((domain, index) => {
+            const Icon = domain.icon;
+            return (
+              <div
+                key={index}
+                className="group hover-lift glass rounded-2xl p-8 text-center hover-glow fade-in-up neon-border"
+                style={{ animationDelay: domain.delay }}
+              >
+                <div className={`w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-r ${domain.color} ${domain.darkColor} p-4 shadow-lg group-hover:shadow-xl transition-all duration-400 pulse-glow`}>
+                  <Icon className="w-full h-full text-white" />
+                </div>
+                
+                <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors duration-300">
+                  {domain.title}
+                </h3>
+                
+                <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                  {domain.description}
+                </p>
+
+                <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-6">
+                  <Users className="w-4 h-4" />
+                  <span>{domain.partners}</span>
+                </div>
+
+                <Link
+                  to="/domains"
+                  className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-medium transition-all duration-400 group-hover:gap-3"
+                >
+                  Learn More
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Enhanced CTA Section */}
+        <div className="text-center fade-in-up stagger-4">
+          <div className="glass rounded-2xl p-8 max-w-3xl mx-auto hover-lift neon-border">
+            <h3 className="text-2xl font-bold text-foreground mb-4">
+              Ready to Find Your Perfect Partner?
+            </h3>
+            <p className="text-muted-foreground mb-8">
+              Join our ecosystem of innovative partners and unlock new opportunities for growth and collaboration.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                to="/partners"
+                className="btn-modern hover-glow"
+              >
+                View All Partners
+              </Link>
+              <Link
+                to="/join"
+                className="glass border border-white/20 dark:border-cyan-400/30 text-foreground px-8 py-3 rounded-full font-medium hover-lift transition-all duration-400 neon-border"
+              >
+                Become a Partner
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default DomainHighlights;
+
+		>Footer.tsx :
+import { Link } from 'react-router-dom';
+import { Mail, Phone, MapPin, Linkedin, Twitter, Instagram, Sparkles } from 'lucide-react';
+
+const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
+  const quickLinks = [
+    { name: 'About Us', path: '/about' },
+    { name: 'Services', path: '/services' },
+    { name: 'Domains', path: '/domains' },
+    { name: 'Partners', path: '/partners' },
+  ];
+
+  const domains = [
+    { name: '99digicom.com', url: 'https://99digicom.com' },
+    { name: '99infosource.com', url: 'https://99infosource.com' },
+    { name: '99finserv.com', url: 'https://99finserv.com' },
+    { name: 'harmonyhights.com', url: 'https://harmonyhights.com' },
+  ];
+
+  const socialLinks = [
+    { icon: Linkedin, url: '#', label: 'LinkedIn' },
+    { icon: Twitter, url: '#', label: 'Twitter' },
+    { icon: Instagram, url: '#', label: 'Instagram' },
+  ];
+
+  return (
+    <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+      <div className="container mx-auto px-4 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+          {/* Company Info */}
+          <div className="space-y-6 fade-in-left">
+            <div className="flex items-center space-x-3">
+              <div className="relative">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                  <span className="text-white font-bold text-lg">99</span>
+                </div>
+                <Sparkles className="absolute -top-1 -right-1 w-4 h-4 text-yellow-400" />
+              </div>
+              <span className="text-2xl font-bold">Partners</span>
+            </div>
+
+            <p className="text-gray-300 leading-relaxed">
+              Empowering businesses through strategic partnerships across digital commerce, IT & marketing, financial services, and spiritual wellness.
+            </p>
+
+            <div className="space-y-3">
+              <div className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors">
+                <Mail className="w-5 h-5 text-blue-400" />
+                <span>hello@99partners.com</span>
+              </div>
+              <div className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors">
+                <Phone className="w-5 h-5 text-green-400" />
+                <span>+91 99999 99999</span>
+              </div>
+              <div className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors">
+                <MapPin className="w-5 h-5 text-red-400" />
+                <span>Mumbai, Maharashtra, India</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div className="space-y-6 fade-in-up stagger-1">
+            <h3 className="text-xl font-bold">Quick Links</h3>
+            <ul className="space-y-3">
+              {quickLinks.map((link, index) => (
+                <li key={index}>
+                  <Link
+                    to={link.path}
+                    className="text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-2 inline-block"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link
+                  to="/contact"
+                  className="text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-2 inline-block"
+                >
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/join"
+                  className="text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-2 inline-block"
+                >
+                  Join Us
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Our Domains */}
+          <div className="space-y-6 fade-in-up stagger-2">
+            <h3 className="text-xl font-bold">Our Domains</h3>
+            <ul className="space-y-3">
+              {domains.map((domain, index) => (
+                <li key={index}>
+                  <a
+                    href={domain.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-300 hover:text-blue-400 transition-all duration-300 hover:translate-x-2 inline-block"
+                  >
+                    {domain.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Newsletter & Social */}
+          <div className="space-y-6 fade-in-right">
+            <h3 className="text-xl font-bold">Stay Connected</h3>
+
+            <div className="space-y-4">
+              <p className="text-gray-300">
+                Subscribe to our newsletter for updates on new partnerships and opportunities.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-2">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="flex-1 px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                />
+                <button
+                  className="px-5 py-3 btn-modern text-sm whitespace-nowrap flex items-center justify-center"
+
+                >
+                  Subscribe
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h4 className="font-semibold">Follow Us</h4>
+              <div className="flex gap-4">
+                {socialLinks.map((social, index) => {
+                  const Icon = social.icon;
+                  return (
+                    <a
+                      key={index}
+                      href={social.url}
+                      aria-label={social.label}
+                      className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 transition-all duration-300 hover:scale-110"
+                    >
+                      <Icon className="w-5 h-5" />
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="border-t border-gray-700 pt-8 fade-in-up stagger-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-gray-400 text-sm">
+              © {currentYear} 99 Partners. All rights reserved.
+            </p>
+            <div className="flex gap-6 text-sm text-gray-400">
+              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+              <a href="#" className="hover:text-white transition-colors">Cookie Policy</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
+
+
+		>Header.tsx :
+import { useState, useEffect } from 'react';
+import { Menu, X, Sparkles } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+
+
+const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'About', path: '/about' },
+    { name: 'Services', path: '/services' },
+    { name: 'Domains', path: '/domains' },
+    { name: 'Partners', path: '/partners' },
+    { name: 'Contact', path: '/contact' },
+  ];
+
+  const isActive = (path: string) => location.pathname === path;
+
+  return (
+    <header className={`fixed top-0 w-full z-50 transition-all duration-500 ${
+      isScrolled ? 'glass shadow-lg' : 'bg-transparent'
+    }`}>
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between items-center h-20">
+          <Link to="/" className="flex items-center space-x-3 group">
+            <div className="relative">
+              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110">
+                <span className="text-white font-bold text-lg">99</span>
+              </div>
+              <Sparkles className="absolute -top-1 -right-1 w-4 h-4 text-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </div>
+            <span className="text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+              Partners
+            </span>
+          </Link>
+
+          <nav className="hidden md:flex space-x-8">
+            {navItems.map((item, index) => (
+              <Link
+                key={item.name}
+                to={item.path}
+                className={`relative text-sm font-medium transition-all duration-300 hover:text-primary group ${
+                  isActive(item.path) ? 'text-primary' : 'text-muted-foreground'
+                }`}
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                {item.name}
+                <span className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full ${
+                  isActive(item.path) ? 'w-full' : ''
+                }`}></span>
+              </Link>
+            ))}
+          </nav>
+
+          <div className="hidden md:flex items-center space-x-4">
+            
+            <Link
+              to="/join"
+              className="btn-modern text-sm hover-glow"
+            >
+              Join Us
+            </Link>
+          </div>
+
+          <div className="md:hidden flex items-center space-x-2">
+            
+            <button
+              className="p-2 rounded-lg hover:bg-muted/50 transition-colors"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <div className="relative w-6 h-6">
+                <Menu className={`absolute inset-0 transition-all duration-300 ${isMenuOpen ? 'opacity-0 rotate-90' : 'opacity-100'}`} size={24} />
+                <X className={`absolute inset-0 transition-all duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0 -rotate-90'}`} size={24} />
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <div className={`md:hidden transition-all duration-500 overflow-hidden ${
+          isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}>
+          <div className="py-6 border-t border-white/10">
+            <nav className="flex flex-col space-y-4">
+              {navItems.map((item, index) => (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  className={`text-sm font-medium transition-all duration-300 hover:text-primary hover:translate-x-2 ${
+                    isActive(item.path) ? 'text-primary' : 'text-muted-foreground'
+                  }`}
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              ))}
+              <Link
+                to="/join"
+                className="btn-modern text-sm w-fit mt-4"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Join Us
+              </Link>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+};
+
+export default Header;
+
+				
+			>Hero.tsx :
+
+import { Link } from 'react-router-dom';
+import { ArrowRight, Sparkles } from 'lucide-react';
+
+const Hero = () => {
+  return (
+    <section className="relative min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 overflow-hidden cyber-grid particle-effect">
+      {/* Enhanced animated background elements for dark theme */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-400 dark:bg-cyan-400 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-20 dark:opacity-30 animate-pulse"></div>
+        <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-purple-400 dark:bg-purple-500 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-20 dark:opacity-25 animate-pulse" style={{animationDelay: '2s'}}></div>
+        <div className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-pink-400 dark:bg-pink-500 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-20 dark:opacity-20 animate-pulse" style={{animationDelay: '4s'}}></div>
+        
+        {/* Additional cyber elements for dark theme */}
+        <div className="absolute top-1/2 right-1/3 w-32 h-32 border border-cyan-400/30 rounded-full dark:block hidden animate-spin" style={{animationDuration: '20s'}}></div>
+        <div className="absolute bottom-1/3 left-1/2 w-48 h-48 border border-purple-400/20 rounded-full dark:block hidden animate-spin" style={{animationDuration: '30s', animationDirection: 'reverse'}}></div>
+      </div>
+
+      <div className="relative container mx-auto px-4 pt-32 pb-20">
+        <div className="max-w-4xl mx-auto text-center space-y-8">
+          {/* Enhanced floating icon with neon effects */}
+          <div className="flex justify-center mb-8 fade-in-up">
+            <div className="glass rounded-full p-4 float-animation hover-glow neon-border">
+              <Sparkles className="w-8 h-8 text-primary" />
+            </div>
+          </div>
+
+          <h1 className="text-5xl md:text-7xl font-bold leading-tight fade-in-up stagger-1">
+            Empowering Businesses with{' '}
+            <span className="gradient-text">Strategic Partnerships</span>
+          </h1>
+          
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto fade-in-up stagger-2">
+            Connecting you with the right partners to accelerate your growth through innovation and collaboration.
+          </p>
+
+          <div className="glass rounded-2xl p-8 max-w-4xl mx-auto fade-in-up stagger-3 hover-lift">
+            <p className="text-lg md:text-xl text-card-foreground leading-relaxed">
+              99 Partners is a dynamic ecosystem connecting businesses across{' '}
+              <span className="font-semibold text-blue-600 dark:text-cyan-400">Digital Commerce</span>,{' '}
+              <span className="font-semibold text-green-600 dark:text-emerald-400">IT & Marketing</span>,{' '}
+              <span className="font-semibold text-purple-600 dark:text-purple-400">Financial Services</span>, and the{' '}
+              <span className="font-semibold text-orange-600 dark:text-pink-400">Spiritual Wellness</span> domain.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-6 justify-center fade-in-up stagger-4">
+            <Link
+              to="/partners"
+              className="btn-modern group inline-flex items-center gap-3 hover-glow"
+            >
+              Find Your Perfect Partner
+              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+            </Link>
+            <Link
+              to="/join"
+              className="glass border border-white/20 dark:border-cyan-400/30 text-foreground px-8 py-3 rounded-full font-medium hover-lift transition-all duration-400 neon-border"
+            >
+              Become a Partner
+            </Link>
+          </div>
+
+          {/* Enhanced scroll indicator */}
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 fade-in-up stagger-4">
+            <div className="w-6 h-10 border-2 border-muted-foreground dark:border-cyan-400 rounded-full flex justify-center pulse-glow">
+              <div className="w-1 h-3 bg-muted-foreground dark:bg-cyan-400 rounded-full mt-2 animate-bounce"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Hero;
+
+	
+	hooks
+	
+		>use-mobile.tsx :
+import * as React from "react"
+
+const MOBILE_BREAKPOINT = 768
+
+export function useIsMobile() {
+  const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
+
+  React.useEffect(() => {
+    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
+    const onChange = () => {
+      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    }
+    mql.addEventListener("change", onChange)
+    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    return () => mql.removeEventListener("change", onChange)
+  }, [])
+
+  return !!isMobile
+}
+
+		>use-toast.ts :
+import * as React from "react"
+
+import type {
+  ToastActionElement,
+  ToastProps,
+} from "@/components/ui/toast"
+
+const TOAST_LIMIT = 1
+const TOAST_REMOVE_DELAY = 1000000
+
+type ToasterToast = ToastProps & {
+  id: string
+  title?: React.ReactNode
+  description?: React.ReactNode
+  action?: ToastActionElement
+}
+
+const actionTypes = {
+  ADD_TOAST: "ADD_TOAST",
+  UPDATE_TOAST: "UPDATE_TOAST",
+  DISMISS_TOAST: "DISMISS_TOAST",
+  REMOVE_TOAST: "REMOVE_TOAST",
+} as const
+
+let count = 0
+
+function genId() {
+  count = (count + 1) % Number.MAX_SAFE_INTEGER
+  return count.toString()
+}
+
+type ActionType = typeof actionTypes
+
+type Action =
+  | {
+      type: ActionType["ADD_TOAST"]
+      toast: ToasterToast
+    }
+  | {
+      type: ActionType["UPDATE_TOAST"]
+      toast: Partial<ToasterToast>
+    }
+  | {
+      type: ActionType["DISMISS_TOAST"]
+      toastId?: ToasterToast["id"]
+    }
+  | {
+      type: ActionType["REMOVE_TOAST"]
+      toastId?: ToasterToast["id"]
+    }
+
+interface State {
+  toasts: ToasterToast[]
+}
+
+const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>()
+
+const addToRemoveQueue = (toastId: string) => {
+  if (toastTimeouts.has(toastId)) {
+    return
+  }
+
+  const timeout = setTimeout(() => {
+    toastTimeouts.delete(toastId)
+    dispatch({
+      type: "REMOVE_TOAST",
+      toastId: toastId,
+    })
+  }, TOAST_REMOVE_DELAY)
+
+  toastTimeouts.set(toastId, timeout)
+}
+
+export const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case "ADD_TOAST":
+      return {
+        ...state,
+        toasts: [action.toast, ...state.toasts].slice(0, TOAST_LIMIT),
+      }
+
+    case "UPDATE_TOAST":
+      return {
+        ...state,
+        toasts: state.toasts.map((t) =>
+          t.id === action.toast.id ? { ...t, ...action.toast } : t
+        ),
+      }
+
+    case "DISMISS_TOAST": {
+      const { toastId } = action
+
+      // ! Side effects ! - This could be extracted into a dismissToast() action,
+      // but I'll keep it here for simplicity
+      if (toastId) {
+        addToRemoveQueue(toastId)
+      } else {
+        state.toasts.forEach((toast) => {
+          addToRemoveQueue(toast.id)
+        })
+      }
+
+      return {
+        ...state,
+        toasts: state.toasts.map((t) =>
+          t.id === toastId || toastId === undefined
+            ? {
+                ...t,
+                open: false,
+              }
+            : t
+        ),
+      }
+    }
+    case "REMOVE_TOAST":
+      if (action.toastId === undefined) {
+        return {
+          ...state,
+          toasts: [],
+        }
+      }
+      return {
+        ...state,
+        toasts: state.toasts.filter((t) => t.id !== action.toastId),
+      }
+  }
+}
+
+const listeners: Array<(state: State) => void> = []
+
+let memoryState: State = { toasts: [] }
+
+function dispatch(action: Action) {
+  memoryState = reducer(memoryState, action)
+  listeners.forEach((listener) => {
+    listener(memoryState)
+  })
+}
+
+type Toast = Omit<ToasterToast, "id">
+
+function toast({ ...props }: Toast) {
+  const id = genId()
+
+  const update = (props: ToasterToast) =>
+    dispatch({
+      type: "UPDATE_TOAST",
+      toast: { ...props, id },
+    })
+  const dismiss = () => dispatch({ type: "DISMISS_TOAST", toastId: id })
+
+  dispatch({
+    type: "ADD_TOAST",
+    toast: {
+      ...props,
+      id,
+      open: true,
+      onOpenChange: (open) => {
+        if (!open) dismiss()
+      },
+    },
+  })
+
+  return {
+    id: id,
+    dismiss,
+    update,
+  }
+}
+
+function useToast() {
+  const [state, setState] = React.useState<State>(memoryState)
+
+  React.useEffect(() => {
+    listeners.push(setState)
+    return () => {
+      const index = listeners.indexOf(setState)
+      if (index > -1) {
+        listeners.splice(index, 1)
+      }
+    }
+  }, [state])
+
+  return {
+    ...state,
+    toast,
+    dismiss: (toastId?: string) => dispatch({ type: "DISMISS_TOAST", toastId }),
+  }
+}
+
+export { useToast, toast }
+
+	lib
+		>utils.ts  :
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+pages 
+
+> About.tsx :
+
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+
+const About = () => {
+  const values = [
+    {
+      title: 'Collaboration',
+      description: 'Building strong partnerships through mutual trust and shared goals',
+    },
+    {
+      title: 'Innovation',
+      description: 'Embracing cutting-edge solutions to drive business transformation',
+    },
+    {
+      title: 'Inclusivity',
+      description: 'Creating opportunities for businesses of all sizes to thrive',
+    },
+    {
+      title: 'Impact',
+      description: 'Delivering measurable results that accelerate growth and success',
+    },
+  ];
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Header />
+      
+      <main>
+        {/* Hero Section */}
+        <section className="bg-gradient-to-br from-background to-muted/50 py-20">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center space-y-6">
+              <h1 className="text-4xl md:text-5xl font-bold text-foreground">
+                About 99 Partners
+              </h1>
+              <p className="text-xl text-muted-foreground">
+                Empowering businesses and individuals with robust partnerships and cutting-edge solutions
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Our Domains */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-3xl font-bold text-center mb-12">Our Domain Portfolio</h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="bg-card border rounded-lg p-6">
+                  <h3 className="text-xl font-semibold mb-3 text-blue-600">99digicom.com</h3>
+                  <p className="text-muted-foreground">
+                    <strong>Digital Commerce:</strong> Comprehensive e-commerce solutions, ONDC integration, 
+                    and co-branding opportunities for businesses looking to establish their online presence.
+                  </p>
+                </div>
+
+                <div className="bg-card border rounded-lg p-6">
+                  <h3 className="text-xl font-semibold mb-3 text-green-600">99infosource.com</h3>
+                  <p className="text-muted-foreground">
+                    <strong>IT & Marketing:</strong> Complete KPO, BPO, and LPO services along with 
+                    digital strategy development and IT infrastructure solutions.
+                  </p>
+                </div>
+
+                <div className="bg-card border rounded-lg p-6">
+                  <h3 className="text-xl font-semibold mb-3 text-purple-600">99finserv.com</h3>
+                  <p className="text-muted-foreground">
+                    <strong>Financial Services:</strong> SME loan facilitation and customized funding 
+                    support to help businesses access the capital they need to grow.
+                  </p>
+                </div>
+
+                <div className="bg-card border rounded-lg p-6">
+                  <h3 className="text-xl font-semibold mb-3 text-orange-600">harmonyhights.com</h3>
+                  <p className="text-muted-foreground">
+                    <strong>Spiritual Ecosystem:</strong> Holistic wellness solutions including yoga, 
+                    meditation, Panchkarma, Ayurveda, astrology, and spiritual guidance.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Mission Statement */}
+        <section className="py-16 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto text-center">
+              <h2 className="text-3xl font-bold mb-6">Our Mission</h2>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                To create a dynamic ecosystem that connects businesses across diverse industries, 
+                fostering meaningful partnerships that drive innovation, growth, and sustainable success. 
+                We believe in the power of collaboration to transform ideas into impactful solutions 
+                that benefit businesses, communities, and individuals alike.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Core Values */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-3xl font-bold text-center mb-12">Our Core Values</h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {values.map((value, index) => (
+                  <div key={index} className="bg-card border rounded-lg p-6">
+                    <h3 className="text-xl font-semibold mb-3 text-primary">
+                      {value.title}
+                    </h3>
+                    <p className="text-muted-foreground">
+                      {value.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-16 bg-primary">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto text-center space-y-6">
+              <h2 className="text-3xl font-bold text-primary-foreground">
+                Ready to Partner with Us?
+              </h2>
+              <p className="text-xl text-primary-foreground/90">
+                Join our ecosystem and discover new opportunities for growth and collaboration.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a
+                  href="/join"
+                  className="bg-primary-foreground text-primary px-8 py-3 rounded-lg font-medium hover:bg-primary-foreground/90 transition-colors"
+                >
+                  Become a Partner
+                </a>
+                <a
+                  href="/contact"
+                  className="border border-primary-foreground text-primary-foreground px-8 py-3 rounded-lg font-medium hover:bg-primary-foreground/10 transition-colors"
+                >
+                  Contact Us
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default About;
+
+> Contact.tsx :
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import ContactForm from '@/components/ContactForm';
+import { Mail, Phone, MapPin, Clock, MessageSquare, Headphones } from 'lucide-react';
+
+const Contact = () => {
+  const contactMethods = [
+    {
+      icon: Mail,
+      title: 'Email Us',
+      description: 'Get in touch via email for detailed inquiries',
+      contact: 'hello@99partners.com',
+      action: 'mailto:hello@99partners.com',
+      color: 'from-blue-500 to-cyan-500'
+    },
+    {
+      icon: Phone,
+      title: 'Call Us',
+      description: 'Speak directly with our partnership team',
+      contact: '+91 99999 99999',
+      action: 'tel:+919999999999',
+      color: 'from-green-500 to-emerald-500'
+    },
+    {
+      icon: MessageSquare,
+      title: 'Live Chat',
+      description: 'Get instant support through our chat system',
+      contact: 'Available 24/7',
+      action: '#',
+      color: 'from-purple-500 to-violet-500'
+    },
+    {
+      icon: Headphones,
+      title: 'Support Center',
+      description: 'Access our comprehensive help resources',
+      contact: 'Help Center',
+      action: '#',
+      color: 'from-orange-500 to-pink-500'
+    }
+  ];
+
+  const offices = [
+    {
+      city: 'Mumbai',
+      address: 'Andheri East, Mumbai, Maharashtra 400069',
+      phone: '+91 99999 99999',
+      email: 'mumbai@99partners.com'
+    },
+    {
+      city: 'Delhi',
+      address: 'Connaught Place, New Delhi, Delhi 110001',
+      phone: '+91 88888 88888',
+      email: 'delhi@99partners.com'
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-black dark:to-gray-900">
+      <Header />
+      
+      <main className="pt-20">
+        {/* Hero Section */}
+        <section className="py-20">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center space-y-6">
+              <h1 className="text-4xl md:text-5xl font-bold text-foreground dark:text-white fade-in-up">
+                Let's Start a <span className="gradient-text">Conversation</span>
+              </h1>
+              <p className="text-xl text-muted-foreground dark:text-neutral-300 max-w-2xl mx-auto fade-in-up stagger-1">
+                Ready to explore partnership opportunities? We're here to help you connect with the right partners and accelerate your business growth.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Contact Methods */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+              {contactMethods.map((method, index) => {
+                const Icon = method.icon;
+                return (
+                  <div
+                    key={index}
+                    className="glass rounded-xl p-6 text-center hover-lift hover-glow fade-in-up"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <div className={`w-14 h-14 mx-auto mb-4 rounded-xl bg-gradient-to-r ${method.color} p-3 shadow-lg`}>
+                      <Icon className="w-full h-full text-white" />
+                    </div>
+                    <h3 className="font-bold text-foreground dark:text-white mb-2">{method.title}</h3>
+                    <p className="text-sm text-muted-foreground dark:text-neutral-300 mb-3">{method.description}</p>
+                    <a
+                      href={method.action}
+                      className="text-primary hover:text-primary/80 font-medium transition-colors"
+                    >
+                      {method.contact}
+                    </a>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* Main Contact Section */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+              {/* Contact Form */}
+              <div>
+                <ContactForm />
+              </div>
+
+              {/* Office Information */}
+              <div className="space-y-8">
+                <div className="glass rounded-2xl p-8 fade-in-right">
+                  <h3 className="text-2xl font-bold text-foreground dark:text-white mb-6">Our Offices</h3>
+                  
+                  <div className="space-y-8">
+                    {offices.map((office, index) => (
+                      <div key={index} className="border-b border-gray-200 last:border-b-0 pb-6 last:pb-0 dark:border-gray-700">
+                        <h4 className="text-lg font-semibold text-foreground dark:text-white mb-3">{office.city} Office</h4>
+                        <div className="space-y-3 text-muted-foreground dark:text-neutral-300">
+                          <div className="flex items-start gap-3">
+                            <MapPin className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
+                            <span>{office.address}</span>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <Phone className="w-5 h-5 text-green-500 flex-shrink-0" />
+                            <a href={`tel:${office.phone}`} className="hover:text-primary transition-colors">
+                              {office.phone}
+                            </a>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <Mail className="w-5 h-5 text-blue-500 flex-shrink-0" />
+                            <a href={`mailto:${office.email}`} className="hover:text-primary transition-colors">
+                              {office.email}
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Business Hours */}
+                <div className="glass rounded-2xl p-8 fade-in-right stagger-1">
+                  <h3 className="text-2xl font-bold text-foreground dark:text-white mb-6 flex items-center gap-3">
+                    <Clock className="w-6 h-6 text-primary" />
+                    Business Hours
+                  </h3>
+                  
+                  <div className="space-y-3 text-muted-foreground dark:text-neutral-300">
+                    <div className="flex justify-between">
+                      <span>Monday - Friday</span>
+                      <span className="font-medium">9:00 AM - 6:00 PM</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Saturday</span>
+                      <span className="font-medium">10:00 AM - 4:00 PM</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Sunday</span>
+                      <span className="font-medium">Closed</span>
+                    </div>
+                 </div>
+
+                  <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/10 rounded-lg">
+                    <p className="text-sm text-blue-800 dark:text-blue-300">
+                      <strong>Need urgent assistance?</strong> Our emergency support line is available 24/7 for existing partners.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Quick Links */}
+        <section className="py-16 bg-gradient-to-r from-primary/5 to-purple-500/5 dark:from-gray-800 dark:to-gray-900">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center">
+              <h3 className="text-2xl font-bold text-foreground dark:text-white mb-8 fade-in-up">
+                Frequently Asked Questions
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="glass rounded-xl p-6 hover-lift fade-in-up stagger-1">
+                  <h4 className="font-semibold text-foreground dark:text-white mb-2">Partnership Process</h4>
+                  <p className="text-sm text-muted-foreground dark:text-neutral-300">
+                    Learn about our partnership onboarding process and requirements.
+                  </p>
+                </div>
+                
+                <div className="glass rounded-xl p-6 hover-lift fade-in-up stagger-2">
+                  <h4 className="font-semibold text-foreground dark:text-white mb-2">Service Domains</h4>
+                  <p className="text-sm text-muted-foreground dark:text-neutral-300">
+                    Explore our four business verticals and service offerings.
+                  </p>
+                </div>
+                
+                <div className="glass rounded-xl p-6 hover-lift fade-in-up stagger-3">
+                  <h4 className="font-semibold text-foreground dark:text-white mb-2">Support & Resources</h4>
+                  <p className="text-sm text-muted-foreground dark:text-neutral-300">
+                    Access our comprehensive support center and resources.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default Contact;
+
+> Domains.tsx :
+
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import { useState } from 'react';
+import { ShoppingCart, Laptop, DollarSign, Heart } from 'lucide-react';
+
+const Domains = () => {
+  const [activeTab, setActiveTab] = useState(0);
+
+  const domains = [
+    {
+      id: 'digital-commerce',
+      icon: ShoppingCart,
+      title: 'Digital Commerce',
+      domain: '99digicom.com',
+      color: 'blue',
+      overview: 'Comprehensive e-commerce solutions helping businesses establish and grow their online presence through ONDC integration and co-branding opportunities.',
+      services: [
+        'ONDC marketplace integration',
+        'E-commerce platform development',
+        'Co-branding for product lines',
+        'Digital catalog management',
+        'Payment gateway integration',
+        'Inventory management systems',
+        'Customer relationship management',
+        'Analytics and reporting tools',
+      ],
+      partners: [
+        { name: '99bowls', description: 'Healthy food delivery and meal solutions' },
+        { name: 'Nutraio', description: 'Nutritional supplements and wellness products' },
+        { name: 'GudGoodlife', description: 'Lifestyle and wellness e-commerce platform' },
+        { name: 'Perlmillet', description: 'Organic and sustainable food products' },
+        { name: 'CHAAH Tea', description: 'Premium tea blends and accessories' },
+      ],
+    },
+    {
+      id: 'it-marketing',
+      icon: Laptop,
+      title: 'IT & Marketing',
+      domain: '99infosource.com',
+      color: 'green',
+      overview: 'Complete outsourcing solutions and digital strategy services to help businesses optimize operations and enhance their market presence.',
+      services: [
+        'Knowledge Process Outsourcing (KPO)',
+        'Business Process Outsourcing (BPO)',
+        'Legal Process Outsourcing (LPO)',
+        'Digital marketing strategy',
+        'IT infrastructure development',
+        'Software development services',
+        'Content creation and management',
+        'SEO and digital advertising',
+      ],
+      partners: [
+        { name: 'eBranding Studio', description: 'Digital branding and creative solutions' },
+        { name: 'Biztech.one', description: 'Technology consulting and development' },
+        { name: 'Doctor Dairy', description: 'Healthcare and dairy industry solutions' },
+        { name: 'ARKinfoserv', description: 'Information technology services and consulting' },
+      ],
+    },
+    {
+      id: 'financial-services',
+      icon: DollarSign,
+      title: 'Financial Services',
+      domain: '99finserv.com',
+      color: 'purple',
+      overview: 'Comprehensive financial solutions including SME loan facilitation and customized funding support to help businesses access the capital they need.',
+      services: [
+        'SME loan facilitation',
+        'Working capital financing',
+        'Equipment financing',
+        'Business credit solutions',
+        'Financial planning and advisory',
+        'Investment guidance',
+        'Insurance solutions',
+        'Tax planning and compliance',
+      ],
+      partners: [
+        { name: 'ICICI Bank', description: 'Leading private sector bank with comprehensive banking services' },
+        { name: 'Bank of Baroda', description: 'Public sector bank with extensive branch network' },
+        { name: 'Kotak Bank', description: 'Full-service commercial bank offering various financial products' },
+        { name: 'Tata Capital', description: 'Financial services company providing diverse funding solutions' },
+      ],
+    },
+    {
+      id: 'spiritual-ecosystem',
+      icon: Heart,
+      title: 'Spiritual Ecosystem',
+      domain: 'harmonyhights.com',
+      color: 'orange',
+      overview: 'Holistic wellness solutions encompassing ancient wisdom and modern practices to promote physical, mental, and spiritual well-being.',
+      services: [
+        'Yoga and meditation programs',
+        'Panchkarma treatments',
+        'Ayurvedic consultations',
+        'Astrology and horoscope services',
+        'Ritual ceremonies (Karmkand)',
+        'Star gazing and cosmic awareness',
+        'Spiritual counseling',
+        'Wellness retreats and workshops',
+      ],
+      partners: [
+        { name: 'Joshidada.com', description: 'Astrology and spiritual guidance platform' },
+        { name: 'BigBirthday.in', description: 'Event planning with spiritual and cultural elements' },
+        { name: 'Lilvan.com', description: 'Ayurvedic products and wellness solutions' },
+        { name: 'Yoga Studio', description: 'Professional yoga instruction and wellness programs' },
+      ],
+    },
+  ];
+
+  const getColorClasses = (color: string, variant: 'primary' | 'secondary' | 'accent' = 'primary') => {
+    const colors = {
+      blue: {
+        primary: 'text-blue-600 bg-blue-50 border-blue-200',
+        secondary: 'bg-blue-500 text-white',
+        accent: 'text-blue-600',
+      },
+      green: {
+        primary: 'text-green-600 bg-green-50 border-green-200',
+        secondary: 'bg-green-500 text-white',
+        accent: 'text-green-600',
+      },
+      purple: {
+        primary: 'text-purple-600 bg-purple-50 border-purple-200',
+        secondary: 'bg-purple-500 text-white',
+        accent: 'text-purple-600',
+      },
+      orange: {
+        primary: 'text-orange-600 bg-orange-50 border-orange-200',
+        secondary: 'bg-orange-500 text-white',
+        accent: 'text-orange-600',
+      },
+    };
+    return colors[color as keyof typeof colors][variant];
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Header />
+      
+      <main>
+        {/* Hero Section */}
+        <section className="bg-gradient-to-br from-background to-muted/50 py-20">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center space-y-6">
+              <h1 className="text-4xl md:text-5xl font-bold text-foreground">
+                Business Domains
+              </h1>
+              <p className="text-xl text-muted-foreground">
+                Explore our comprehensive portfolio across four strategic business verticals
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Interactive Tabs */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            {/* Tab Navigation */}
+            <div className="flex flex-wrap justify-center mb-12 gap-4">
+              {domains.map((domain, index) => {
+                const Icon = domain.icon;
+                return (
+                  <button
+                    key={index}
+                    onClick={() => setActiveTab(index)}
+                    className={`flex items-center gap-3 px-6 py-3 rounded-lg font-medium transition-all ${
+                      activeTab === index
+                        ? getColorClasses(domain.color, 'secondary')
+                        : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                    }`}
+                  >
+                    <Icon className="w-5 h-5" />
+                    <span className="hidden sm:inline">{domain.title}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Active Domain Content */}
+            <div className="max-w-6xl mx-auto">
+              {domains.map((domain, index) => {
+                if (activeTab !== index) return null;
+                
+                const Icon = domain.icon;
+                return (
+                  <div key={index} className="space-y-8">
+                    {/* Domain Header */}
+                    <div className={`bg-card border rounded-2xl p-8 ${getColorClasses(domain.color)}`}>
+                      <div className="flex items-center gap-4 mb-6">
+                        <div className={`w-16 h-16 rounded-xl flex items-center justify-center ${getColorClasses(domain.color)}`}>
+                          <Icon className="w-8 h-8" />
+                        </div>
+                        <div>
+                          <h2 className="text-3xl font-bold text-card-foreground">
+                            {domain.title}
+                          </h2>
+                          <p className="text-muted-foreground font-medium text-lg">
+                            {domain.domain}
+                          </p>
+                        </div>
+                      </div>
+                      <p className="text-lg text-muted-foreground leading-relaxed">
+                        {domain.overview}
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                      {/* Services */}
+                      <div className="bg-card border rounded-xl p-6">
+                        <h3 className="text-2xl font-bold mb-6 text-card-foreground">
+                          Services Offered
+                        </h3>
+                        <div className="grid grid-cols-1 gap-3">
+                          {domain.services.map((service, serviceIndex) => (
+                            <div key={serviceIndex} className="flex items-start gap-3">
+                              <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${getColorClasses(domain.color, 'secondary')}`}></div>
+                              <span className="text-muted-foreground">{service}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Partners */}
+                      <div className="bg-card border rounded-xl p-6">
+                        <h3 className="text-2xl font-bold mb-6 text-card-foreground">
+                          Key Partners
+                        </h3>
+                        <div className="space-y-4">
+                          {domain.partners.map((partner, partnerIndex) => (
+                            <div key={partnerIndex} className="bg-muted/50 rounded-lg p-4">
+                              <h4 className={`font-semibold mb-2 ${getColorClasses(domain.color, 'accent')}`}>
+                                {partner.name}
+                              </h4>
+                              <p className="text-sm text-muted-foreground">
+                                {partner.description}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-16 bg-primary">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto text-center space-y-6">
+              <h2 className="text-3xl font-bold text-primary-foreground">
+                Interested in Partnering with Us?
+              </h2>
+              <p className="text-xl text-primary-foreground/90">
+                Join our ecosystem and discover new opportunities across our business domains.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a
+                  href="/join"
+                  className="bg-primary-foreground text-primary px-8 py-3 rounded-lg font-medium hover:bg-primary-foreground/90 transition-colors"
+                >
+                  Apply for Partnership
+                </a>
+                <a
+                  href="/contact"
+                  className="border border-primary-foreground text-primary-foreground px-8 py-3 rounded-lg font-medium hover:bg-primary-foreground/10 transition-colors"
+                >
+                  Learn More
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default Domains;
+
+> index.tsx :
+
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import Hero from '@/components/Hero';
+import DomainHighlights from '@/components/DomainHighlights';
+
+const Index = () => {
+  return (
+    <div className="min-h-screen bg-background">
+      <Header />
+      <Hero />
+      <DomainHighlights />
+      <Footer />
+    </div>
+  );
+};
+
+export default Index;
+
+> Join.tsx :
+
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import { useState } from 'react';
+import { Upload, CheckCircle } from 'lucide-react';
+
+const Join = () => {
+  const [formData, setFormData] = useState({
+    fullName: '',
+    company: '',
+    designation: '',
+    email: '',
+    phone: '',
+    website: '',
+    businessType: [],
+    businessDescription: '',
+    partnershipGoals: '',
+    targetAudience: '',
+    consent: false,
+  });
+
+  const businessTypes = [
+    'Digital Commerce',
+    'IT & Marketing',
+    'Financial Services',
+    'Spiritual Wellness',
+    'Healthcare',
+    'Education',
+    'Manufacturing',
+    'Consulting',
+    'Other',
+  ];
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value, type } = e.target;
+    
+    if (type === 'checkbox') {
+      const checked = (e.target as HTMLInputElement).checked;
+      if (name === 'consent') {
+        setFormData(prev => ({ ...prev, consent: checked }));
+      } else {
+        setFormData(prev => ({
+          ...prev,
+          businessType: checked 
+            ? [...prev.businessType, value]
+            : prev.businessType.filter(type => type !== value)
+        }));
+      }
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Partnership application submitted:', formData);
+    alert('Thank you for your partnership application! We will review your submission and get back to you within 3-5 business days.');
+    // Reset form
+    setFormData({
+      fullName: '',
+      company: '',
+      designation: '',
+      email: '',
+      phone: '',
+      website: '',
+      businessType: [],
+      businessDescription: '',
+      partnershipGoals: '',
+      targetAudience: '',
+      consent: false,
+    });
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Header />
+      
+      <main>
+        {/* Hero Section */}
+        <section className="bg-gradient-to-br from-background to-muted/50 py-20">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center space-y-6">
+              <h1 className="text-4xl md:text-5xl font-bold text-foreground">
+                Join Our Partnership Network
+              </h1>
+              <p className="text-xl text-muted-foreground">
+                Become part of our thriving ecosystem and unlock new opportunities for growth and collaboration
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Application Form */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="bg-card border rounded-2xl p-8">
+                <div className="mb-8">
+                  <h2 className="text-2xl font-bold mb-4 text-card-foreground">
+                    Partnership Application Form
+                  </h2>
+                  <p className="text-muted-foreground">
+                    Please fill out the form below to apply for partnership opportunities with 99 Partners. 
+                    All fields marked with * are required.
+                  </p>
+                </div>
+
+                <form onSubmit={handleSubmit} className="space-y-8">
+                  {/* Personal Information */}
+                  <div className="space-y-6">
+                    <h3 className="text-lg font-semibold text-card-foreground border-b pb-2">
+                      Personal Information
+                    </h3>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label htmlFor="fullName" className="block text-sm font-medium mb-2 text-card-foreground">
+                          Full Name *
+                        </label>
+                        <input
+                          type="text"
+                          id="fullName"
+                          name="fullName"
+                          value={formData.fullName}
+                          onChange={handleInputChange}
+                          required
+                          className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-background"
+                          placeholder="Enter your full name"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="designation" className="block text-sm font-medium mb-2 text-card-foreground">
+                          Designation *
+                        </label>
+                        <input
+                          type="text"
+                          id="designation"
+                          name="designation"
+                          value={formData.designation}
+                          onChange={handleInputChange}
+                          required
+                          className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-background"
+                          placeholder="Your role/position"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label htmlFor="company" className="block text-sm font-medium mb-2 text-card-foreground">
+                        Company Name *
+                      </label>
+                      <input
+                        type="text"
+                        id="company"
+                        name="company"
+                        value={formData.company}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-background"
+                        placeholder="Enter your company name"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Contact Information */}
+                  <div className="space-y-6">
+                    <h3 className="text-lg font-semibold text-card-foreground border-b pb-2">
+                      Contact Information
+                    </h3>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label htmlFor="email" className="block text-sm font-medium mb-2 text-card-foreground">
+                          Email Address *
+                        </label>
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleInputChange}
+                          required
+                          className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-background"
+                          placeholder="Enter your email address"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="phone" className="block text-sm font-medium mb-2 text-card-foreground">
+                          Phone Number *
+                        </label>
+                        <input
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleInputChange}
+                          required
+                          className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-background"
+                          placeholder="Enter your phone number"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label htmlFor="website" className="block text-sm font-medium mb-2 text-card-foreground">
+                        Website (Optional)
+                      </label>
+                      <input
+                        type="url"
+                        id="website"
+                        name="website"
+                        value={formData.website}
+                        onChange={handleInputChange}
+                        className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-background"
+                        placeholder="https://yourwebsite.com"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Business Information */}
+                  <div className="space-y-6">
+                    <h3 className="text-lg font-semibold text-card-foreground border-b pb-2">
+                      Business Information
+                    </h3>
+                    
+                    <div>
+                      <label className="block text-sm font-medium mb-3 text-card-foreground">
+                        Type of Business * (Select all that apply)
+                      </label>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        {businessTypes.map((type) => (
+                          <label key={type} className="flex items-center space-x-2 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              name="businessType"
+                              value={type}
+                              checked={formData.businessType.includes(type)}
+                              onChange={handleInputChange}
+                              className="rounded border-border text-primary focus:ring-primary"
+                            />
+                            <span className="text-sm text-card-foreground">{type}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label htmlFor="businessDescription" className="block text-sm font-medium mb-2 text-card-foreground">
+                        Describe Your Business *
+                      </label>
+                      <textarea
+                        id="businessDescription"
+                        name="businessDescription"
+                        value={formData.businessDescription}
+                        onChange={handleInputChange}
+                        required
+                        rows={4}
+                        className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-background resize-vertical"
+                        placeholder="Tell us about your business, products/services, and what makes you unique..."
+                      ></textarea>
+                    </div>
+
+                    <div>
+                      <label htmlFor="partnershipGoals" className="block text-sm font-medium mb-2 text-card-foreground">
+                        Partnership Goals *
+                      </label>
+                      <textarea
+                        id="partnershipGoals"
+                        name="partnershipGoals"
+                        value={formData.partnershipGoals}
+                        onChange={handleInputChange}
+                        required
+                        rows={4}
+                        className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-background resize-vertical"
+                        placeholder="What do you hope to achieve through this partnership? What are your goals and expectations?"
+                      ></textarea>
+                    </div>
+
+                    <div>
+                      <label htmlFor="targetAudience" className="block text-sm font-medium mb-2 text-card-foreground">
+                        Target Audience *
+                      </label>
+                      <textarea
+                        id="targetAudience"
+                        name="targetAudience"
+                        value={formData.targetAudience}
+                        onChange={handleInputChange}
+                        required
+                        rows={3}
+                        className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-background resize-vertical"
+                        placeholder="Describe your target market and customer demographics..."
+                      ></textarea>
+                    </div>
+                  </div>
+
+                  {/* File Upload */}
+                  <div className="space-y-6">
+                    <h3 className="text-lg font-semibold text-card-foreground border-b pb-2">
+                      Additional Information
+                    </h3>
+                    
+                    <div>
+                      <label className="block text-sm font-medium mb-2 text-card-foreground">
+                        Upload Pitch Deck (Optional)
+                      </label>
+                      <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-primary transition-colors cursor-pointer">
+                        <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
+                        <p className="text-muted-foreground">
+                          Click to upload or drag and drop your pitch deck
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          PDF, PPT, or PPTX (Max 10MB)
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Consent */}
+                  <div className="space-y-4">
+                    <label className="flex items-start space-x-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="consent"
+                        checked={formData.consent}
+                        onChange={handleInputChange}
+                        required
+                        className="mt-1 rounded border-border text-primary focus:ring-primary"
+                      />
+                      <span className="text-sm text-card-foreground">
+                        I consent to 99 Partners collecting and processing my personal information for 
+                        the purpose of evaluating partnership opportunities. I understand that my 
+                        information will be handled in accordance with the privacy policy. *
+                      </span>
+                    </label>
+                  </div>
+
+                  {/* Submit Button */}
+                  <div className="pt-6">
+                    <button
+                      type="submit"
+                      disabled={!formData.consent}
+                      className="w-full bg-primary text-primary-foreground px-6 py-4 rounded-lg font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
+                    >
+                      <CheckCircle className="w-5 h-5" />
+                      Submit Partnership Application
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* What Happens Next */}
+        <section className="py-16 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-3xl font-bold text-center mb-12">What Happens Next?</h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="text-center space-y-4">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                    <span className="text-2xl font-bold text-primary">1</span>
+                  </div>
+                  <h3 className="text-xl font-semibold">Application Review</h3>
+                  <p className="text-muted-foreground">
+                    Our team will review your application within 3-5 business days
+                  </p>
+                </div>
+
+                <div className="text-center space-y-4">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                    <span className="text-2xl font-bold text-primary">2</span>
+                  </div>
+                  <h3 className="text-xl font-semibold">Initial Discussion</h3>
+                  <p className="text-muted-foreground">
+                    We'll schedule a call to discuss potential partnership opportunities
+                  </p>
+                </div>
+
+                <div className="text-center space-y-4">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                    <span className="text-2xl font-bold text-primary">3</span>
+                  </div>
+                  <h3 className="text-xl font-semibold">Partnership Agreement</h3>
+                  <p className="text-muted-foreground">
+                    Finalize partnership terms and begin our collaboration journey
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default Join;
+
+> NotFound.tsx :
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+
+const NotFound = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    console.error(
+      "404 Error: User attempted to access non-existent route:",
+      location.pathname
+    );
+  }, [location.pathname]);
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold mb-4">404</h1>
+        <p className="text-xl text-gray-600 mb-4">Oops! Page not found</p>
+        <a href="/" className="text-blue-500 hover:text-blue-700 underline">
+          Return to Home
+        </a>
+      </div>
+    </div>
+  );
+};
+
+export default NotFound;
+
+> Partners.tsx :
+
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import { ShoppingCart, Laptop, DollarSign, Heart, Plus } from 'lucide-react';
+
+const Partners = () => {
+  const partnerCategories = [
+    {
+      title: 'E-Commerce Partners',
+      icon: ShoppingCart,
+      color: 'blue',
+      partners: [
+        { name: '99bowls', description: 'Healthy food delivery and meal solutions for urban lifestyle' },
+        { name: 'Nutraio', description: 'Premium nutritional supplements and wellness products' },
+        { name: 'GudGoodlife', description: 'Lifestyle and wellness e-commerce platform' },
+        { name: 'Perlmillet', description: 'Organic and sustainable food products' },
+        { name: 'CHAAH Tea', description: 'Premium tea blends and accessories' },
+      ],
+    },
+    {
+      title: 'IT & Marketing Partners',
+      icon: Laptop,
+      color: 'green',
+      partners: [
+        { name: 'eBranding Studio', description: 'Digital branding and creative solutions' },
+        { name: 'Biztech.one', description: 'Technology consulting and development services' },
+        { name: 'Doctor Dairy', description: 'Healthcare and dairy industry technology solutions' },
+        { name: 'ARKinfoserv', description: 'Information technology services and consulting' },
+      ],
+    },
+    {
+      title: 'Financial Partners',
+      icon: DollarSign,
+      color: 'purple',
+      partners: [
+        { name: 'ICICI Bank', description: 'Leading private sector bank with comprehensive banking services' },
+        { name: 'Bank of Baroda', description: 'Public sector bank with extensive branch network' },
+        { name: 'Kotak Bank', description: 'Full-service commercial bank offering various financial products' },
+        { name: 'Tata Capital', description: 'Financial services company providing diverse funding solutions' },
+      ],
+    },
+    {
+      title: 'Wellness Partners',
+      icon: Heart,
+      color: 'orange',
+      partners: [
+        { name: 'Joshidada.com', description: 'Astrology and spiritual guidance platform' },
+        { name: 'BigBirthday.in', description: 'Event planning with spiritual and cultural elements' },
+        { name: 'Lilvan.com', description: 'Ayurvedic products and wellness solutions' },
+        { name: 'Yoga Studio', description: 'Professional yoga instruction and wellness programs' },
+        { name: 'Panchkarma Kutir', description: 'Traditional Ayurvedic treatments and therapies' },
+      ],
+    },
+  ];
+
+  const getColorClasses = (color: string) => {
+    const colors = {
+      blue: 'text-blue-600 bg-blue-50 border-blue-200',
+      green: 'text-green-600 bg-green-50 border-green-200',
+      purple: 'text-purple-600 bg-purple-50 border-purple-200',
+      orange: 'text-orange-600 bg-orange-50 border-orange-200',
+    };
+    return colors[color as keyof typeof colors];
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Header />
+      
+      <main>
+        {/* Hero Section */}
+        <section className="bg-gradient-to-br from-background to-muted/50 py-20">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center space-y-6">
+              <h1 className="text-4xl md:text-5xl font-bold text-foreground">
+                Our Partners
+              </h1>
+              <p className="text-xl text-muted-foreground">
+                Meet the innovative companies and organizations that make up our dynamic ecosystem
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Partners Grid */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="space-y-16">
+              {partnerCategories.map((category, categoryIndex) => {
+                const Icon = category.icon;
+                return (
+                  <div key={categoryIndex} className="max-w-6xl mx-auto">
+                    <div className="flex items-center gap-4 mb-8">
+                      <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${getColorClasses(category.color)}`}>
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <h2 className="text-2xl font-bold text-foreground">
+                        {category.title}
+                      </h2>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {category.partners.map((partner, partnerIndex) => (
+                        <div
+                          key={partnerIndex}
+                          className="bg-card border rounded-xl p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+                        >
+                          <div className="space-y-4">
+                            <h3 className="text-xl font-semibold text-card-foreground">
+                              {partner.name}
+                            </h3>
+                            <p className="text-muted-foreground text-sm leading-relaxed">
+                              {partner.description}
+                            </p>
+                            <div className="pt-2">
+                              <button className={`text-sm font-medium hover:underline ${getColorClasses(category.color).split(' ')[0]}`}>
+                                Learn More →
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* Partnership Benefits */}
+        <section className="py-16 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-3xl font-bold text-center mb-12">Partnership Benefits</h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="text-center space-y-4">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                    <ShoppingCart className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold">Market Access</h3>
+                  <p className="text-muted-foreground">
+                    Gain access to new markets and customer segments through our network
+                  </p>
+                </div>
+
+                <div className="text-center space-y-4">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                    <Laptop className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold">Technology Integration</h3>
+                  <p className="text-muted-foreground">
+                    Leverage cutting-edge technology solutions and digital platforms
+                  </p>
+                </div>
+
+                <div className="text-center space-y-4">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                    <DollarSign className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold">Financial Support</h3>
+                  <p className="text-muted-foreground">
+                    Access funding opportunities and financial services tailored to your needs
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Become a Partner CTA */}
+        <section className="py-16 bg-primary">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center space-y-8">
+              <div className="w-20 h-20 bg-primary-foreground/20 rounded-full flex items-center justify-center mx-auto">
+                <Plus className="w-10 h-10 text-primary-foreground" />
+              </div>
+              
+              <h2 className="text-3xl font-bold text-primary-foreground">
+                Ready to Join Our Partnership Network?
+              </h2>
+              
+              <p className="text-xl text-primary-foreground/90 max-w-2xl mx-auto">
+                Become part of our thriving ecosystem and unlock new opportunities for growth, 
+                collaboration, and innovation across multiple business domains.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a
+                  href="/join"
+                  className="bg-primary-foreground text-primary px-8 py-3 rounded-lg font-medium hover:bg-primary-foreground/90 transition-colors inline-flex items-center gap-2"
+                >
+                  <Plus className="w-5 h-5" />
+                  Become a Partner
+                </a>
+                <a
+                  href="/contact"
+                  className="border border-primary-foreground text-primary-foreground px-8 py-3 rounded-lg font-medium hover:bg-primary-foreground/10 transition-colors"
+                >
+                  Contact Partnership Team
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Success Stories */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-3xl font-bold text-center mb-12">Success Stories</h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="bg-card border rounded-xl p-6">
+                  <h3 className="text-xl font-semibold mb-4 text-primary">
+                    Digital Transformation Success
+                  </h3>
+                  <p className="text-muted-foreground mb-4">
+                    "Through 99 Partners, we successfully integrated ONDC platform and increased 
+                    our online sales by 300% within six months."
+                  </p>
+                  <p className="text-sm font-medium">- E-commerce Partner</p>
+                </div>
+
+                <div className="bg-card border rounded-xl p-6">
+                  <h3 className="text-xl font-semibold mb-4 text-primary">
+                    Funding Success Story
+                  </h3>
+                  <p className="text-muted-foreground mb-4">
+                    "The financial partnership helped us secure ₹50L funding for expansion, 
+                    enabling us to scale our operations nationwide."
+                  </p>
+                  <p className="text-sm font-medium">- SME Partner</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default Partners;
+
+> App.css :
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+> App.tsx :
+
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Index from "./pages/Index";
+import About from "./pages/About";
+import Services from "./pages/Services";
+import Domains from "./pages/Domains";
+import Partners from "./pages/Partners";
+import Contact from "./pages/Contact";
+import Join from "./pages/Join";
+import NotFound from "./pages/NotFound";
+
+const queryClient = new QueryClient();
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+  
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/domains" element={<Domains />} />
+            <Route path="/partners" element={<Partners />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/join" element={<Join />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+  </QueryClientProvider>
+);
+
+export default App;
+
+>indext.tsx :
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Futuristic dark theme with cyber aesthetics */
+    --background: 225 15% 8%;
+    --foreground: 200 20% 95%;
+    
+    --card: 225 20% 10%;
+    --card-foreground: 200 20% 95%;
+    
+    --popover: 225 20% 12%;
+    --popover-foreground: 200 20% 95%;
+    
+    --primary: 195 100% 50%;
+    --primary-foreground: 225 15% 8%;
+    
+    --secondary: 240 15% 15%;
+    --secondary-foreground: 200 20% 90%;
+    
+    --muted: 240 10% 15%;
+    --muted-foreground: 200 10% 70%;
+    
+    --accent: 270 100% 60%;
+    --accent-foreground: 225 15% 8%;
+    
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 200 20% 95%;
+    
+    --border: 240 20% 20%;
+    --input: 240 20% 18%;
+    --ring: 195 100% 50%;
+    
+    --sidebar-background: 225 20% 10%;
+    --sidebar-foreground: 200 20% 90%;
+    --sidebar-primary: 195 100% 50%;
+    --sidebar-primary-foreground: 225 15% 8%;
+    --sidebar-accent: 240 15% 15%;
+    --sidebar-accent-foreground: 200 20% 90%;
+    --sidebar-border: 240 20% 20%;
+    --sidebar-ring: 195 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar for dark theme */
+  .dark ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .dark ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary));
+    border-radius: 4px;
+  }
+
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--accent));
+  }
+}
+
+@layer components {
+  /* Enhanced Glassmorphism effects for cyber theme */
+  .glass {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  }
+
+  .dark .glass {
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    box-shadow: 
+      0 8px 32px 0 rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(59, 130, 246, 0.1),
+      0 0 20px rgba(59, 130, 246, 0.1);
+  }
+
+  .glass-dark {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  }
+
+  .dark .glass-dark {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    box-shadow: 
+      0 8px 32px 0 rgba(0, 0, 0, 0.6),
+      inset 0 1px 0 rgba(139, 92, 246, 0.2),
+      0 0 30px rgba(139, 92, 246, 0.15);
+  }
+
+  /* Animated elements with enhanced dark theme */
+  .fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .fade-in-left {
+    animation: fadeInLeft 0.8s ease-out forwards;
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  .fade-in-right {
+    animation: fadeInRight 0.8s ease-out forwards;
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  .stagger-1 { animation-delay: 0.1s; }
+  .stagger-2 { animation-delay: 0.2s; }
+  .stagger-3 { animation-delay: 0.3s; }
+  .stagger-4 { animation-delay: 0.4s; }
+
+  /* Enhanced hover effects for cyber theme */
+  .hover-lift {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+  }
+
+  .dark .hover-lift:hover {
+    transform: translateY(-12px);
+    box-shadow: 
+      0 25px 50px rgba(0, 0, 0, 0.4),
+      0 0 40px rgba(59, 130, 246, 0.3);
+  }
+
+  .hover-glow {
+    transition: all 0.4s ease;
+    position: relative;
+  }
+
+  .hover-glow:hover {
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+  }
+
+  .dark .hover-glow:hover {
+    box-shadow: 
+      0 0 40px rgba(59, 130, 246, 0.6),
+      0 0 60px rgba(139, 92, 246, 0.4),
+      inset 0 0 20px rgba(59, 130, 246, 0.1);
+  }
+
+  /* Enhanced floating labels for dark theme */
+  .floating-label {
+    position: relative;
+  }
+
+  .floating-label input,
+  .floating-label textarea,
+  .floating-label select {
+    @apply w-full px-4 pt-6 pb-2 border border-border rounded-lg bg-background text-foreground placeholder-transparent focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300;
+  }
+
+  .dark .floating-label input,
+  .dark .floating-label textarea,
+  .dark .floating-label select {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+
+  .dark .floating-label input:focus,
+  .dark .floating-label textarea:focus,
+  .dark .floating-label select:focus {
+    box-shadow: 
+      inset 0 1px 3px rgba(0, 0, 0, 0.3),
+      0 0 20px rgba(59, 130, 246, 0.4);
+  }
+
+  .floating-label label {
+    @apply absolute left-4 top-4 text-muted-foreground transition-all duration-300 pointer-events-none;
+  }
+
+  .floating-label input:focus + label,
+  .floating-label input:not(:placeholder-shown) + label,
+  .floating-label textarea:focus + label,
+  .floating-label textarea:not(:placeholder-shown) + label,
+  .floating-label select:focus + label,
+  .floating-label select:not([value=""]) + label {
+    @apply text-primary text-sm top-2;
+  }
+
+  /* Enhanced gradient text for dark theme */
+  .gradient-text {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .dark .gradient-text {
+    background: linear-gradient(135deg, #00d4ff 0%, #a855f7 50%, #ec4899 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Enhanced modern button styles for cyber theme */
+  .btn-modern {
+    @apply relative overflow-hidden bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 hover:shadow-lg hover:scale-105;
+  }
+
+  .dark .btn-modern {
+    background: linear-gradient(135deg, #00d4ff 0%, #a855f7 100%);
+    box-shadow: 
+      0 4px 15px rgba(0, 212, 255, 0.3),
+      inset 0 1px 0 rgba(18, 6, 6, 0.1);
+  }
+
+  .dark .btn-modern:hover {
+    box-shadow: 
+      0 8px 25px rgba(0, 212, 255, 0.4),
+      0 0 30px rgba(168, 85, 247, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  .btn-modern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.6s;
+  }
+
+  .btn-modern:hover::before {
+    left: 100%;
+  }
+
+  /* Cyber grid background effect */
+  .cyber-grid {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cyber-grid::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .dark .cyber-grid::before {
+    opacity: 0.3;
+  }
+
+  /* Neon border effect */
+  .neon-border {
+    position: relative;
+  }
+
+  .dark .neon-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    background: linear-gradient(45deg, #00d4ff, #a855f7, #ec4899, #00d4ff);
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask-composite: xor;
+    animation: neon-rotate 3s linear infinite;
+  }
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.float-animation {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
+  50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.8); }
+}
+
+.dark .pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes neon-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Cyber particle effect */
+@keyframes particle-float {
+  0%, 100% { 
+    transform: translateY(0px) translateX(0px);
+    opacity: 0.3;
+  }
+  25% { 
+    transform: translateY(-20px) translateX(10px);
+    opacity: 0.8;
+  }
+  50% { 
+    transform: translateY(-40px) translateX(-5px);
+    opacity: 1;
+  }
+  75% { 
+    transform: translateY(-20px) translateX(-15px);
+    opacity: 0.6;
+  }
+}
+
+.particle-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.dark .particle-effect::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, #00d4ff 0%, transparent 70%);
+  border-radius: 50%;
+  top: 20%;
+  left: 10%;
+  animation: particle-float 6s ease-in-out infinite;
+}
+
+> main.tsx  :
+ import { createRoot } from 'react-dom/client'
+import App from './App.tsx'
+import './index.css'
+
+createRoot(document.getElementById("root")!).render(<App />);
+
+
+	
+
+

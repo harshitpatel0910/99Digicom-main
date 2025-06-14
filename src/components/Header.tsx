@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, Sparkles } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
-import ThemeSwitch from './ThemeSwitch';
+
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -65,7 +65,7 @@ const Header = () => {
           </nav>
 
           <div className="hidden md:flex items-center space-x-4">
-            <ThemeSwitch />
+            
             <Link
               to="/join"
               className="btn-modern text-sm hover-glow"
@@ -75,7 +75,7 @@ const Header = () => {
           </div>
 
           <div className="md:hidden flex items-center space-x-2">
-            <ThemeSwitch />
+            
             <button
               className="p-2 rounded-lg hover:bg-muted/50 transition-colors"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
